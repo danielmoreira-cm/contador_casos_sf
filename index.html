@@ -7,9 +7,8 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       background: #f4f4f4;
-      margin-top: 50px;
+      margin: 40px;
     }
 
     h1 {
@@ -18,13 +17,14 @@
     }
 
     .botoes {
-      margin: 30px;
+      margin-top: 30px;
     }
 
     button {
-      padding: 20px 40px;
+      width: 250px;
+      height: 120px;
       font-size: 20px;
-      margin: 10px;
+      margin-right: 20px;
       cursor: pointer;
     }
 
@@ -44,31 +44,41 @@
     <button onclick="zerar()">Zerar o contador</button>
   </div>
 
-  <div id="resultado">
-    0 Casos SF
-  </div>
+  <div id="resultado">0 Casos SF</div>
 
   <script>
     let contador = 0
+    let inicio = null
 
     function clicar() {
+      if (inicio === null) {
+        inicio = new Date()
+      }
+
       contador++
       atualizar()
     }
 
     function zerar() {
       contador = 0
-      atualizar()
+      inicio = null
+      document.getElementById("resultado").innerHTML = "0 Casos SF"
+    }
+
+    function formatarHora(data) {
+      const h = data.getHours().toString().padStart(2, '0')
+      const m = data.getMinutes().toString().padStart(2, '0')
+      return h + ":" + m
     }
 
     function atualizar() {
       const agora = new Date()
 
-      const hora = agora.getHours().toString().padStart(2, '0')
-      const minuto = agora.getMinutes().toString().padStart(2, '0')
+      const horaInicio = formatarHora(inicio)
+      const horaAtual = formatarHora(agora)
 
       document.getElementById("resultado").innerHTML =
-        contador + " Casos SF - atualizado às " + hora + ":" + minuto
+        contador + " Casos SF " + horaInicio + " - " + horaAtual
     }
   </script>
 
